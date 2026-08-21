@@ -1,0 +1,48 @@
+class Solution {
+public:
+    vector<int> searchRange(vector<int>& nums, int x) {
+        int n = nums.size();
+
+        int first = -1;
+        int last = -1;
+
+        // Find first occurrence
+        int s = 0, e = n - 1;
+
+        while (s <= e) {
+            int mid = s + (e - s) / 2;
+
+            if (nums[mid] == x) {
+                first = mid;
+                e = mid - 1;   // left side jao
+            }
+            else if (nums[mid] < x) {
+                s = mid + 1;
+            }
+            else {
+                e = mid - 1;
+            }
+        }
+
+        // Find last occurrence
+        s = 0;
+        e = n - 1;
+
+        while (s <= e) {
+            int mid = s + (e - s) / 2;
+
+            if (nums[mid] == x) {
+                last = mid;
+                s = mid + 1;   // right side jao
+            }
+            else if (nums[mid] < x) {
+                s = mid + 1;
+            }
+            else {
+                e = mid - 1;
+            }
+        }
+
+        return {first, last};
+    }
+};
