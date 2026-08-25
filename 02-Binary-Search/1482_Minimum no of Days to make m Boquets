@@ -1,0 +1,48 @@
+class Solution {
+public:
+    int canMakeBoquet(vector<int>&bloomDay, int mid , int k)
+    {
+        int boquet_count = 0;
+        int consecutive_count = 0;
+
+        for(int i = 0; i<bloomDay.size();i++)
+        {
+            if(bloomDay[i]<=mid)
+            {
+                consecutive_count++;
+            }
+            else{
+                consecutive_count=0;
+            }
+
+            if(consecutive_count == k){
+                boquet_count++;
+                consecutive_count = 0;
+            }
+        }
+
+        return boquet_count;
+    }
+    int minDays(vector<int>& bloomDay, int m, int k) {
+       int n = bloomDay.size();
+       int start = 0;
+       int end_Day = *max_element(begin(bloomDay) , end(bloomDay));
+       int min_Day = -1;
+
+       while(start<=end_Day)
+       {
+            int mid = start+(end_Day-start)/2;
+            if(canMakeBoquet(bloomDay,mid,k)>=m){
+                min_Day = mid;
+                end_Day = mid-1;
+            }
+            else
+            {
+                start = mid+1;
+        }   }
+
+       
+
+       return min_Day;
+    }
+};
