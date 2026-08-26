@@ -1,0 +1,44 @@
+class Solution {
+public:
+    bool isPossible(vector<int>& boards, int mid, int k) {
+        int painter = 1;
+        long long boardPainter = 0;
+
+        for(int i = 0; i < boards.size(); i++) {
+            if(boards[i] + boardPainter <= mid) {
+                boardPainter += boards[i];
+            }
+            else {
+                painter += 1;
+                boardPainter = boards[i];
+            }
+        }
+
+        return painter <= k;
+    }
+
+    int minTime(vector<int>& boards, int k) {
+        int n = boards.size();
+
+        if(k > n) return -1;
+
+        int s = *max_element(boards.begin(), boards.end());
+        int e = accumulate(boards.begin(), boards.end(), 0);
+
+        int ans = -1;
+
+        while(s <= e) {
+            long long mid = s + (e - s) / 2;
+
+            if(isPossible(boards, mid, k)) {
+                ans = mid;
+                e = mid - 1;
+            }
+            else {
+                s = mid + 1;
+            }
+        }
+
+        return ans;
+    }
+};
