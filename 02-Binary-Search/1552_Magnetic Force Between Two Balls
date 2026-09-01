@@ -1,0 +1,39 @@
+class Solution {
+public:
+    bool isPossible(vector<int>&position,int mid , int m){
+        int previous = position[0];
+        int countball = 1;
+
+        for(int i=1;i<position.size();i++){
+            int current = position[i];
+            if(current - previous>= mid){
+                countball++;
+                previous = current;
+            }
+            if(countball == m){
+                break;
+            }
+        }
+        return countball==m;
+    }
+    int maxDistance(vector<int>& position, int m) {
+        int n = position.size();
+        sort(position.begin() , position.end());
+
+        int minf = 1;
+        int maxf = position[n-1]-position[0];
+        int result = 0;
+
+        while(minf<=maxf){
+            int mid = minf+(maxf-minf)/2;
+            if(isPossible(position,mid,m)){
+                result = mid;
+                minf = mid+1;
+            }
+            else{
+                maxf = mid-1;
+            }
+        }
+        return result;
+    }
+};
