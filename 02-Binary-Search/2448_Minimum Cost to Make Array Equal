@@ -1,0 +1,27 @@
+class Solution {
+public:
+    typedef long long ll;
+      long long getCost(vector<int>&nums,long long mid, vector<int> &cost){
+        ll minCost = 0;
+        for(int i=0;i<nums.size();i++){
+            minCost += abs((ll)nums[i]-mid)*1LL*cost[i];
+        }
+        return minCost;;
+    }
+    long long minCost(vector<int>& nums, vector<int>& cost) {
+        ll s = *min_element(begin(nums),end(nums));
+        ll e = *max_element(begin(nums),end(nums));
+        while(s<=e){
+            ll mid = s+(e-s)/2;
+            if(getCost(nums,mid,cost)<=getCost(nums,mid+1,cost)){
+              e = mid-1;
+            }
+            else{
+                s = mid+1;
+
+            }
+        }
+        return getCost(nums,s,cost);
+        
+    }
+};
